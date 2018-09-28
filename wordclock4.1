@@ -1,0 +1,265 @@
+import RPi.GPIO as GPIO
+import datetime
+import time
+
+#set the gpio pins
+es_ist = 3
+fuenf = 22
+zehn = 2
+viertel = 23
+vor = 19
+nach = 18
+halb = 14
+ein = 25
+uhr = 11
+
+
+#c_and_v = 0
+
+stundeEins = 8
+stundeZwei = 27
+stundeDrei = 7
+stundeVier = 10
+stundeFuenf = 4
+stundeSechs = 15
+stundeSieben = 12
+stundeAcht = 24
+stundeNeun = 9
+stundeZehn = 5
+stundeElf = 17
+stundeZwoelf = 6
+
+#do not change, if you don't know what you do
+gpioPinsHours = [stundeEins,stundeZwei,stundeDrei,stundeVier,stundeFuenf,stundeSechs,stundeSieben,stundeAcht,stundeNeun,stundeZehn,stundeElf,stundeZwoelf,stundeEins,stundeZwei,stundeDrei,stundeVier,stundeFuenf,stundeSechs,stundeSieben,stundeAcht,stundeNeun,stundeZehn,stundeElf,stundeZwoelf]
+
+gpioPinsMinutes = [es_ist,fuenf,zehn,viertel,vor,nach,halb,ein,uhr]
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(es_ist, GPIO.OUT)
+
+
+GPIO.setup(fuenf, GPIO.OUT)
+GPIO.setup(zehn, GPIO.OUT)
+GPIO.setup(viertel, GPIO.OUT)
+GPIO.setup(vor, GPIO.OUT)
+GPIO.setup(nach, GPIO.OUT)
+GPIO.setup(halb, GPIO.OUT)
+
+GPIO.setup(ein, GPIO.OUT)
+GPIO.setup(uhr, GPIO.OUT)
+
+GPIO.setup(stundeEins, GPIO.OUT)
+GPIO.setup(stundeZwei, GPIO.OUT)
+GPIO.setup(stundeDrei, GPIO.OUT)
+GPIO.setup(stundeVier, GPIO.OUT)
+GPIO.setup(stundeFuenf, GPIO.OUT)
+GPIO.setup(stundeSechs, GPIO.OUT)
+GPIO.setup(stundeSieben, GPIO.OUT)
+GPIO.setup(stundeAcht, GPIO.OUT)
+GPIO.setup(stundeNeun, GPIO.OUT)
+GPIO.setup(stundeZehn, GPIO.OUT)
+GPIO.setup(stundeElf, GPIO.OUT)
+GPIO.setup(stundeZwoelf, GPIO.OUT)
+
+#methods
+def RoundDiv(int_to_round,base=5):                     #divide with 5 and round
+    return int(round(float(int_to_round)/base))        #e.g. 46 is 9
+
+currentMinute = RoundDiv(datetime.datetime.now().minute)        #get the current minute and divide it with 5
+currentHour = datetime.datetime.now().hour                      #get the current hour
+
+
+def TurnOnMinute(minuteToTurnOn, currentHour):
+    valueToTwelve = RoundDiv(minuteToTurnOn)
+    if (valueToTwelve==0 | valueToTwelve==12):      #58-02
+        print(datetime.datetime.now(), ": minute: 58-02")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,False)
+        GPIO.output(nach,False)
+        GPIO.output(halb,False)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==1):      #03-07
+        print(datetime.datetime.now(), ": minute: 03-07")
+        GPIO.output(fuenf,True)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,False)
+        GPIO.output(nach,True)
+        GPIO.output(halb,False)
+        CheckHour(currentHour)
+    if (valueToTwelve==2):      #08-12
+        print(datetime.datetime.now(), ": minute: 08-12")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,True)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,False)
+        GPIO.output(nach,True)
+        GPIO.output(halb,False)
+        CheckHour(currentHour)
+    if (valueToTwelve==3):      #13-17
+        print(datetime.datetime.now(), ": minute: 13-17")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,True)
+        GPIO.output(vor,False)
+        GPIO.output(nach,True)
+        GPIO.output(halb,False)
+        CheckHour(currentHour)
+    if (valueToTwelve==4):      #18-22
+        print(datetime.datetime.now(), ": minute: 18-22")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,True)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,True)
+        GPIO.output(nach,False)
+        GPIO.output(halb,True)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==5):      #23-27
+        print(datetime.datetime.now(), ": minute: 23-27")
+        GPIO.output(fuenf,True)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,True)
+        GPIO.output(nach,False)
+        GPIO.output(halb,True)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==6):      #28-32
+        print(datetime.datetime.now(), ": minute: 28-32")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,False)
+        GPIO.output(nach,False)
+        GPIO.output(halb,True)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==7):      #33-37
+        print(datetime.datetime.now(), ": minute: 33-37")
+        GPIO.output(fuenf,True)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,False)
+        GPIO.output(nach,True)
+        GPIO.output(halb,True)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==8):      #38-42
+        print(datetime.datetime.now(), ": minute: 38-42")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,True)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,False)
+        GPIO.output(nach,True)
+        GPIO.output(halb,True)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==9):      #43-47
+        print(datetime.datetime.now(), ": minute: 43-47")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,True)
+        GPIO.output(vor,True)
+        GPIO.output(nach,False)
+        GPIO.output(halb,False)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==10):      #48-52
+        print(datetime.datetime.now(), ": minute: 48-52")
+        GPIO.output(fuenf,False)
+        GPIO.output(zehn,True)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,True)
+        GPIO.output(nach,False)
+        GPIO.output(halb,False)
+        CheckHourPlusOne(currentHour)
+    if (valueToTwelve==11):      #53-57
+        print(datetime.datetime.now(), ": minute: 53-57")
+        GPIO.output(fuenf,True)
+        GPIO.output(zehn,False)
+        GPIO.output(viertel,False)
+        GPIO.output(vor,True)
+        GPIO.output(nach,False)
+        GPIO.output(halb,False)
+        CheckHourPlusOne(currentHour)
+
+def CheckHour(currentHour):
+    #begin logic for hours
+    currentH = datetime.datetime.now().hour
+    if currentHour == currentH:
+        print(datetime.datetime.now(), ": don't change Hour, because it is already up to date: ", datetime.datetime.now().hour)
+    else:
+        TurnOnHour(currentH)
+        print(datetime.datetime.now(), ": try to turn on hour: ",currentH," Try to turn off hour:  ", currentHour)
+    #end logic for hours
+
+def CheckHourPlusOne(currentHour):
+    #begin logic for hours
+    currentH = datetime.datetime.now().hour
+    if currentHour == currentH+1:
+        print(datetime.datetime.now(), ": don't change Hour, because it is already up to date: ", datetime.datetime.now().hour)
+    else:
+        TurnOnHour(currentH+1)
+        print(datetime.datetime.now(), ": try to turn on hour: ",currentH+1," Try to turn off hour:  ", currentHour)
+    #end logic for hours
+
+def TurnOnHour(hourToTurnOn):
+    if (hourToTurnOn == 0):
+        print(datetime.datetime.now(), ": exception hourtoturn on is zero:  set hour to: ", hourToTurnOn)
+        TurnOffAllHoursExcept(23)
+    else:
+        print(datetime.datetime.now(), ": set hour to: ", hourToTurnOn)
+        TurnOffAllHoursExcept(hourToTurnOn-1)
+
+def TurnOffAllHoursExcept(currentHour):
+    for i in range (0,24):
+        if(i != currentHour):
+            GPIO.output(gpioPinsHours[i],False)
+            print(datetime.datetime.now(), ": turn off hour: ", i+1)
+    GPIO.output(gpioPinsHours[currentHour],True)
+
+#program starts
+try:
+    for i in range (0,12):
+        GPIO.output(gpioPinsHours[i],True)
+        print(i+1)
+        time.sleep(1)
+        GPIO.output(gpioPinsHours[i],False)
+
+    for i in range (0,8):
+        GPIO.output(gpioPinsMinutes[i],True)
+        time.sleep(1)
+        GPIO.output(gpioPinsMinutes[i],False)
+    
+	
+    for p in range (0,1):
+    	for i in range (0,12):
+            GPIO.output(gpioPinsHours[i],True)
+            print(i+1)
+            time.sleep(0.05)
+            GPIO.output(gpioPinsHours[i],False)
+
+        for i in range (0,8):
+            GPIO.output(gpioPinsMinutes[i],True)
+            time.sleep(0.05)
+            GPIO.output(gpioPinsMinutes[i],False)    
+
+    GPIO.output(es_ist, True)
+    print(datetime.datetime.now(), ': initially set time to minute', datetime.datetime.now().minute)
+    TurnOnMinute(datetime.datetime.now().minute, 0)
+    #TurnOnHour(datetime.datetime.now().hour, 0)
+    while True:
+        #logic for minutes
+        if RoundDiv(datetime.datetime.now().minute) == currentMinute: #if now is same as last check, do nothing
+            print(datetime.datetime.now(), ': sleep')
+        else:
+            currentMinute = RoundDiv(datetime.datetime.now().minute)
+            print(datetime.datetime.now(), ': set time to minute', datetime.datetime.now().minute)
+            TurnOnMinute(datetime.datetime.now().minute, currentHour)
+        #end logic for minutes
+        time.sleep(30)
+
+finally:
+    for i in range(0,23):
+        GPIO.output(gpioPinsHours[i], False)
+    GPIO.output(22,False)
+    for i in range(0,8):
+        GPIO.output(gpioPinsHours[i], False)
+    GPIO.cleanup()
